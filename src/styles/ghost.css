@@ -1,0 +1,63 @@
+
+/*
+  Ghost
+*/
+
+@keyframes ProximaGhostAnimation {
+  0% {
+    opacity: var(--ghost-animation-opacity-from, 0.75);
+  }
+  50% {
+    opacity: var(--ghost-animation-opacity-to, 1);
+  }
+  100% {
+    opacity: var(--ghost-animation-opacity-from, 0.75);
+  }
+}
+
+[data-ghost="true"] [data-ghost-text],
+[data-ghost="true"] [data-ghost-item] {
+  user-select: none;
+  pointer-events: none;
+  cursor: default;
+  color: transparent;
+  transition: none;
+  background: none;
+  border-color: transparent;
+  box-shadow: none;
+  outline: none;
+  animation: var(--ghost-animation, ProximaGhostAnimation 1s ease both infinite);
+}
+
+[data-ghost="true"] [data-ghost-text],
+[data-ghost="true"] [data-ghost-text]:before,
+[data-ghost="true"] [data-ghost-text]:after {
+  text-decoration-line: line-through;
+  text-decoration-thickness: var(--ghost-text-thickness, 1em);
+  text-decoration-color: var(--ghost-text-color, rgba(107, 107, 107, 0.2));
+}
+
+[data-ghost="true"] [data-ghost-item] {
+  background-color: var(--ghost-item-color, rgba(107, 107, 107, 0.1)) !important;
+}
+
+[data-ghost="true"] [data-ghost-item] [data-ghost-text] {
+  animation: none;
+}
+
+[data-ghost="true"] [data-ghost-item] *:not([data-ghost-text]):not([data-ghost-item]),
+[data-ghost="true"] [data-ghost-item] *:before,
+[data-ghost="true"] [data-ghost-item] *:after,
+[data-ghost="true"] [data-ghost-item]:before,
+[data-ghost="true"] [data-ghost-item]:after {
+  user-select: none;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ghost-animation: none;
+  }
+}

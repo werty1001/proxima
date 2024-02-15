@@ -1,0 +1,4 @@
+{
+  "main": "./effect.mjs",
+  "types": "./effect.d.ts"
+}

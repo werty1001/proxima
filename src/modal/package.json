@@ -1,0 +1,4 @@
+{
+  "main": "./modal.mjs",
+  "types": "./modal.d.ts"
+}

@@ -1,0 +1,4 @@
+{
+  "main": "./switch.mjs",
+  "types": "./switch.d.ts"
+}

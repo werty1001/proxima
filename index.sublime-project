@@ -1,0 +1,18 @@
+{
+    "folders":
+    [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "LSP": {
+            "LSP-volar": {
+                "selector": "text.html.vue | source.ts | source.tsx | source.js | source.jsx"
+            },
+            "LSP-typescript": {
+                "enabled": false
+            }
+        }
+    }
+}

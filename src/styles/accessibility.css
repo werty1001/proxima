@@ -1,0 +1,38 @@
+
+/*
+  Accessibility
+*/
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.outline-focus:focus,
+.outline-focus-visible:focus-visible {
+  outline-offset: var(--app-outline-offset, 0.1875rem);
+  outline:
+    var(--app-outline-size, 0.25rem)
+    var(--app-outline-style, solid)
+    var(--app-outline-color, rgba(0, 61, 255, 0.7));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html *,
+  html *:before,
+  html *:after,
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none;
+    transition: none;
+  }
+}

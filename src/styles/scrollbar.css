@@ -1,0 +1,36 @@
+
+/*
+  Pretty scrollbar
+*/
+
+@layer proxima.scrollbar {
+  .pretty-scrollbar {
+    --base-pretty-scrollbar-background: var(--pretty-scrollbar-track-color, rgba(0, 0, 0, 0));
+    --base-pretty-scrollbar-color: var(--pretty-scrollbar-thumb-color, rgba(107, 107, 107, 0.5));
+
+    --base-pretty-scrollbar-width: var(--pretty-scrollbar-width, var(--pretty-scrollbar-size, 0.75em));
+    --base-pretty-scrollbar-height: var(--pretty-scrollbar-height, var(--pretty-scrollbar-size, 0.75em));
+
+    scrollbar-width: thin;
+    scrollbar-color: var(--base-pretty-scrollbar-color) var(--base-pretty-scrollbar-background);
+  }
+
+  .pretty-scrollbar::-webkit-scrollbar {
+    background-color: var(--base-pretty-scrollbar-background);
+    width: var(--base-pretty-scrollbar-width);
+    height: var(--base-pretty-scrollbar-height);
+  }
+
+  .pretty-scrollbar::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    background-color: var(--base-pretty-scrollbar-color);
+    border: solid var(--pretty-scrollbar-track-padding, 0.1875em) transparent;
+    border-radius: var(--pretty-scrollbar-thumb-radius, 0.75em);
+  }
+
+  @media (hover: hover) {
+    .pretty-scrollbar_hover:not(:hover) {
+      --base-pretty-scrollbar-color: transparent;
+    }
+  }
+}

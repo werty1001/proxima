@@ -1,0 +1,4 @@
+{
+  "main": "./button.mjs",
+  "types": "./button.d.ts"
+}

@@ -1,0 +1,4 @@
+{
+  "main": "./popup.mjs",
+  "types": "./popup.d.ts"
+}

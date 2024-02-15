@@ -1,0 +1,34 @@
+{
+  "name": "proxima-vue",
+  "version": "{version}",
+  "private": false,
+  "license": "MIT",
+  "author": "Oleg Krylov <hi@oleg-krylov.ru>",
+  "description": "UI kit for Vue 3",
+  "keywords": [
+    "vue",
+    "components",
+    "ui",
+    "kit",
+    "library",
+    "vuejs",
+    "bem",
+    "vue.js",
+    "ui-kit",
+    "design-system"
+  ],
+  "main": "./index.mjs",
+  "bin": "./bin.mjs",
+  "peerDependencies": {
+    "vue": "^3.3.4",
+    "vue-router": "^4.0.0"
+  },
+  "homepage": "https://github.com/werty1001/proxima#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/werty1001/proxima.git"
+  },
+  "bugs": {
+    "url": "https://github.com/werty1001/proxima/issues"
+  }
+}

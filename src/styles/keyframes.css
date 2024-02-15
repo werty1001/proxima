@@ -1,0 +1,61 @@
+
+/*
+  Animations
+*/
+
+@layer proxima.keyframes {
+
+  @keyframes FadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes FadeInRight {
+    from {
+      transform: translate3d(var(--keyframe-translate, 1em), 0, 0);
+      opacity: 0;
+    }
+    to {
+      transform: translateZ(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes FadeInLeft {
+    from {
+      transform: translate3d(calc(var(--keyframe-translate, 1em) * -1), 0, 0);
+      opacity: 0;
+    }
+    to {
+      transform: translateZ(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes FadeInTop {
+    from {
+      transform: translate3d(0, calc(var(--keyframe-translate, 1em) * -1), 0);
+      opacity: 0;
+    }
+    to {
+      transform: translateZ(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes FadeInBottom {
+    from {
+      transform: translate3d(0, var(--keyframe-translate, 1em), 0);
+      opacity: 0;
+    }
+    to {
+      transform: translateZ(0);
+      opacity: 1;
+    }
+  }
+
+}

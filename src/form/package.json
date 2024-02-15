@@ -1,0 +1,4 @@
+{
+  "main": "./form.mjs",
+  "types": "./form.d.ts"
+}

@@ -1,0 +1,4 @@
+{
+  "main": "./toggle.mjs",
+  "types": "./toggle.d.ts"
+}

@@ -1,0 +1,4 @@
+{
+  "main": "./spinner.mjs",
+  "types": "./spinner.d.ts"
+}

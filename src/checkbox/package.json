@@ -1,0 +1,4 @@
+{
+  "main": "./checkbox.mjs",
+  "types": "./checkbox.d.ts"
+}

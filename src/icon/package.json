@@ -1,0 +1,4 @@
+{
+  "main": "./icon.mjs",
+  "types": "./icon.d.ts"
+}

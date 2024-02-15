@@ -1,0 +1,28 @@
+:root {
+  color-scheme: dark;
+
+  --app-is-dark-scheme: 1;
+
+  --app-color: #cecccc;
+  --app-dim-color: #a1a1a6;
+  --app-label-color: #a1a1a6;
+  --app-background-color: #161616;
+
+  --app-border-color: rgba(255, 255, 255, 0.07);
+  --app-outline-color: rgba(255, 181, 15, 0.9);
+
+  --app-field-color: #eff8ff;
+  --app-field-background: #141414;
+  --app-field-border-color: #333336;
+
+  --field-placeholder-color: #86868b;
+  --field-popup-background: #1d1d1f;
+  --field-popup-footer-border-color: rgba(255, 255, 255, 0.044);
+  --field-option-hover-background: rgba(255, 255, 255, 0.044);
+
+  --title-color: #fff;
+
+  --notification-background: #1d1d1f;
+  --modal-dialog-background: #161616;
+  --switch-background: #a1a1a6;
+}
