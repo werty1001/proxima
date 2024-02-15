@@ -31,6 +31,9 @@
   "overrides": {
     "@parcel/watcher": "2.1.0"
   },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.9.5"
+  },
   "devDependencies": {
     "@nuxt/kit": "^3.10.2",
     "@nuxt/module-builder": "^0.5.5",
