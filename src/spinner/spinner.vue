@@ -79,7 +79,8 @@
 
 <script setup lang="ts">
 import { computed, unref, useSlots } from 'vue';
-import getRandomId from '@/utils/randomId';
+import useId from '@/composables/id';
+
 import type { ProximaSize } from '../types.d';
 
 export interface ProximaSpinnerProps {
@@ -92,13 +93,14 @@ export interface ProximaSpinnerProps {
 }
 
 const props = withDefaults(defineProps<ProximaSpinnerProps>(), {
-  id: () => getRandomId('spinner'),
   label: '',
   labelPosition: () => getDefaultProp('labelPosition', 'under') as 'under',
   labelVisuallyHidden: false,
   size: () => getDefaultProp('size', 'normal') as 'normal',
   theme: () => getDefaultProp('theme', '') as '',
 });
+
+const id = useId(props.id, 'spinner');
 
 const slots = useSlots();
 const hasLabel = computed(() => Boolean(props.label || slots.label));

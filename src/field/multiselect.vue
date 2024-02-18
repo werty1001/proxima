@@ -78,7 +78,7 @@
         class="field__visually-hidden"
       />
       <div
-        :id="selectedId"
+        :id="selectedId || undefined"
         v-text="`${selectedLabel}: ${valueLabel}`"
         class="field__visually-hidden"
       />
@@ -118,7 +118,7 @@ import useFieldExpose from '@/field/useExpose';
 import useSelection from '@/field/useSelection';
 import useLocale from '@/composables/locale';
 import prepareToCompare from '@/utils/prepareToCompare';
-import getRandomId from '@/utils/randomId';
+import useId from '@/composables/id';
 
 import type { ProximaDynamicProps } from '../types.d';
 
@@ -553,11 +553,11 @@ const onFilterKeydown = (event: KeyboardEvent) => {
 
 // Props
 
-const selectedId = getRandomId('selected');
+const selectedId = useId();
 
 const fieldProps = computed(() => ({
   required: props.required,
-  describedby: [selectedId, props.describedby].filter(Boolean).join(' '),
+  describedby: [unref(selectedId), props.describedby].filter(Boolean).join(' '),
   modelValue: props.hasChips
     ? (unref(hasValue) ? unref(selectedLabel) : unref(filterValue))
     : unref(valueLabel) || unref(filterValue),

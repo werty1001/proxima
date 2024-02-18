@@ -43,7 +43,7 @@
 import { ref, unref, toRaw, computed, useSlots, onMounted, watch, type InputHTMLAttributes } from 'vue';
 import ProximaEffect from '@/effect/effect.vue';
 import useLocale from '@/composables/locale';
-import getRandomId from '@/utils/randomId';
+import useId from '@/composables/id';
 
 import type { ProximaSize, ProximaShadow, ProximaClickEffect } from '../types.d';
 
@@ -68,7 +68,6 @@ export interface ProximaCheckboxProps {
 }
 
 const props = withDefaults(defineProps<ProximaCheckboxProps>(), {
-  id: () => getRandomId('checkbox'),
   type: 'checkbox',
   trueValue: true,
   falseValue: (props: ProximaCheckboxProps) => {
@@ -90,6 +89,8 @@ const props = withDefaults(defineProps<ProximaCheckboxProps>(), {
   effect: () => getDefaultProp('effect', 'none') as 'none',
   theme: () => getDefaultProp('theme', '') as '',
 });
+
+const id = useId(props.id, 'checkbox');
 
 const emit = defineEmits<{
   'update:modelValue': [modelValue: ProximaCheckboxProps['modelValue']]
@@ -136,7 +137,7 @@ const modifiers = computed(() => ({
 
 const attributes = computed(() => ({
   ...props.inputAttrs,
-  id: props.id,
+  id: unref(id) || undefined,
   type: props.type,
   disabled: props.disabled,
   required: props.required,
@@ -164,7 +165,7 @@ const updateByEvent = () => {
     emit('update:modelValue', shouldSendTrue ? props.trueValue : value);
   }
   // Safari does not set focus
-  if (document.activeElement?.id !== props.id) {
+  if (document.activeElement?.id !== getId()) {
     focus();
   }
 };
@@ -189,7 +190,7 @@ const getErrorMessage = () => unref(errorMessage);
 const getContainer = () => unref(container);
 const getElement = () => unref(el);
 const getValue = () => props.modelValue;
-const getId = () => props.id;
+const getId = () => unref(id);
 
 const checkValidity = () => unref(isValid);
 const checkFocus = () => unref(isFocused);
@@ -216,7 +217,7 @@ onMounted(setInputIndeterminate);
 // Slot props
 
 const slotProps = computed(() => ({
-  id: props.id,
+  id: unref(id),
   hasEffect: unref(hasEffect),
   hasLabel: unref(hasLabel),
   isIndeterminate: unref(isIndeterminate),
