@@ -306,6 +306,8 @@ export default defineComponent({
     margin-inline-start: calc(-0.875rem * var(--popup-has-arrow, 0));
     margin-inline-end: calc(-0.875rem * var(--popup-has-arrow, 0));
 
+    --popup-background: var(--field-popup-background, var(--field-background, var(--app-field-background)));
+
     --popup-padding: var(--form-popup-padding, 1rem 1.5rem);
     --popup-box-shadow: var(--form-popup-box-shadow, 0 0.25rem 1rem rgba(0, 0, 0, 0.15));
 
