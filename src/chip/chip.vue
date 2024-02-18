@@ -93,7 +93,7 @@ export default defineComponent({ name: componentName });
     align-items: center;
     justify-content: center;
     font-size: 0.875rem;
-    background-color: var(--chip-background-color, #eee);
+    background: var(--chip-background, #eee);
     border-radius: 0.25rem;
     pointer-events: auto;
     user-select: none;
@@ -120,11 +120,11 @@ export default defineComponent({ name: componentName });
 
   .chip__cross {
     display: block;
-    width: 1em;
-    height: 1em;
+    width: 0.75rem;
+    height: 0.75rem;
     fill: none;
     stroke: currentColor;
-    stroke-width: 1.5;
+    stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
