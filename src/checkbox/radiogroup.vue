@@ -21,7 +21,7 @@
       <ProximaCheckbox
         v-for="(item, i) in optionsList"
         :key="`${id}-item-${i}`"
-        :id="`${id}-item-${i}`"
+        :id="id ? `${id}-item-${i}` : undefined"
         :input-attrs="{
           ...item.inputAttrs,
           name: isMultiple ? undefined : id,
@@ -62,9 +62,9 @@
 
 <script setup lang="ts">
 import { ref, unref, toRaw, computed, useSlots } from 'vue';
-import getRandomId from '@/utils/randomId';
-import useLocale from '@/composables/locale';
 import ProximaCheckbox from '@/checkbox/checkbox.vue';
+import useLocale from '@/composables/locale';
+import useId from '@/composables/id';
 
 import type {
   ProximaSize,
@@ -101,7 +101,6 @@ export interface ProximaRadioGroupProps {
 }
 
 const props = withDefaults(defineProps<ProximaRadioGroupProps>(), {
-  id: () => getRandomId('radiogroup'),
   modelValue: '',
   options: () => [],
   label: '',
@@ -116,6 +115,8 @@ const props = withDefaults(defineProps<ProximaRadioGroupProps>(), {
   effect: () => getDefaultProp('effect', 'none') as 'none',
   theme: () => getDefaultProp('theme', '') as '',
 });
+
+const id = useId(props.id, 'radiogroup');
 
 const emit = defineEmits<{
   'update:modelValue': [modelValue: ProximaRadioGroupProps['modelValue']]
@@ -209,7 +210,7 @@ const container = ref<HTMLFieldSetElement | null>(null);
 const getErrorMessage = () => unref(errorMessage);
 const getContainer = () => unref(container);
 const getValue = () => props.modelValue;
-const getId = () => props.id;
+const getId = () => unref(id);
 
 const checkValidity = () => unref(isValid);
 const checkFocus = () => unref(isFocused);
@@ -246,7 +247,7 @@ const blur = () => {
 // Slot props
 
 const slotProps = computed(() => ({
-  id: props.id,
+  id: unref(id),
   hasLabel: unref(hasLabel),
   hasHeader: unref(hasHeader),
   isValid: unref(isValid),

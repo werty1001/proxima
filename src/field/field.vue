@@ -88,9 +88,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, useSlots, unref, onMounted, watch } from 'vue';
+import { ref, computed, useSlots, unref, onMounted, watch, nextTick } from 'vue';
 import useLocale from '@/composables/locale';
-import getRandomId from '@/utils/randomId';
+import useId from '@/composables/id';
 
 import type {
   InputHTMLAttributes,
@@ -156,7 +156,6 @@ export interface ProximaFieldProps {
 }
 
 const props = withDefaults(defineProps<ProximaFieldProps>(), {
-  id: () => getRandomId('field'),
   modelModifiers: () => ({}),
   modelValue: '',
   label: '',
@@ -185,6 +184,8 @@ const props = withDefaults(defineProps<ProximaFieldProps>(), {
   shadow: () => getDefaultProp('shadow', 'soft') as 'soft',
   theme: () => getDefaultProp('theme', '') as '',
 });
+
+const id = useId(props.id, 'field');
 
 const emit = defineEmits<{
   'click:arrow': []
@@ -326,7 +327,7 @@ const modifiers = computed(() => ({
 const attributes = computed(() => ({
   name: props.autocomplete !== 'off' ? props.autocomplete : undefined,
   ...props.inputAttrs,
-  id: props.id,
+  id: unref(id) || undefined,
   readonly: props.readonly,
   disabled: props.disabled,
   required: props.required,
@@ -349,7 +350,7 @@ const getContainer = () => unref(container);
 const getElement = () => unref(el);
 const getLengthRange = () => [props.minlength, props.maxlength];
 const getValue = () => unref(fieldValue);
-const getId = () => props.id;
+const getId = () => unref(id);
 
 const checkEmpty = () => unref(isEmpty);
 const checkFocus = () => unref(isFocused);
@@ -360,12 +361,9 @@ const select = () => unref(el)?.select?.();
 const focus = () => unref(el)?.focus?.();
 const blur = () => unref(el)?.blur?.();
 
-const setElement = () => {
-  const container = getContainer();
-  if (container) {
-    el.value = container.querySelector(`#${props.id}`) || null;
-  }
-};
+const setElement = () => nextTick(() => {
+  el.value = document.getElementById(getId()) as HTMLInputElement;
+});
 
 onMounted(setElement);
 
@@ -457,7 +455,7 @@ watch(() => props.modelValue, (val: any) => {
 // Slot props
 
 const slotProps = computed(() => ({
-  id: props.id,
+  id: unref(id),
   label: props.label,
   placeholder: props.placeholder,
   fieldValue: unref(fieldValue),

@@ -8,7 +8,7 @@
       :modelValue="value"
       :disabled="disabled"
       :required="required"
-      :describedby="`${id}-error ${describedby}`"
+      :describedby="`${errorId} ${describedby}`"
       :form-error="error"
       v-bind="attrs"
       @update:modelValue="onFieldUpdate"
@@ -20,15 +20,15 @@
       </template>
     </component>
     <div class="form__message" aria-live="polite">
-      <slot name="form-field-error" :error="error" :id="`${id}-error`">
+      <slot name="form-field-error" :error="error" :id="errorId">
         <span
           v-if="error && errorView === 'plain'"
           v-text="error"
-          :id="`${id}-error`"
+          :id="errorId || undefined"
           class="form__error"
         />
       </slot>
-      <slot name="form-field-error-popup" :error="error" :id="`${id}-error`">
+      <slot name="form-field-error-popup" :error="error" :id="errorId">
         <ProximaPopup
           v-if="error && errorView === 'popup' && isFocused"
           align-y="above"
@@ -37,7 +37,7 @@
           :bind-to="`#${focusId}`"
           class="form__popup"
         >
-          <span v-if="error" v-text="error" :id="`${id}-error`" />
+          <span v-if="error" v-text="error" :id="errorId || undefined" />
         </ProximaPopup>
       </slot>
     </div>
@@ -47,11 +47,12 @@
 <script setup lang="ts" generic="T">
 import { ref, unref, computed, useAttrs, inject, onMounted, onBeforeUnmount } from 'vue';
 
+import { formProvideKey } from '@/form/form.vue';
+
 import ProximaField from '@/field/field.vue';
 import ProximaPopup from '@/popup/popup.vue';
-import getRandomId from '@/utils/randomId';
 import useLocale from '@/composables/locale';
-import { formProvideKey } from '@/form/form.vue';
+import useId from '@/composables/id';
 
 import type {
   ProximaDynamicProps,
@@ -85,13 +86,15 @@ export interface ProximaFormFieldProps<Values> {
 }
 
 const props = withDefaults(defineProps<ProximaFormFieldProps<T>>(), {
-  id: () => getRandomId('form-field'),
   is: ProximaField,
   errorView: () => getDefaultProp('errorView', 'popup') as 'popup',
   describedby: '',
   disabled: false,
   required: true,
 });
+
+const id = useId(props.id, 'form-field');
+const errorId = computed(() => unref(id) ? `${unref(id)}-error` : '');
 
 const attrs = useAttrs();
 
@@ -174,7 +177,7 @@ const onFieldUpdate = (value: any) => {
 const onFieldFocus = (event: FocusEvent) => {
   const target = event.target as HTMLInputElement;
   setPopupAlignToStart(['radio', 'checkbox'].includes(target?.type));
-  setFocusId(target.id || props.id);
+  setFocusId(target.id);
   setFocus(true);
   emit('focus', getEventPayload(getValue()));
 };

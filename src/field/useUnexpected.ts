@@ -1,9 +1,9 @@
 import { ref, unref } from 'vue';
 import useTimeout from '@/composables/timeout';
-import getRandomId from '@/utils/randomId';
+import useId from '@/composables/id';
 
 export default () => {
-  const unexpectedId = getRandomId('unexpected');
+  const unexpectedId = useId();
   const unexpectedMessage = ref('');
 
   const setMessage = (val: string) => (unexpectedMessage.value = val);

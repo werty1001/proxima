@@ -138,6 +138,7 @@ export interface ProximaSetupOptions {
   locales?: ProximaLocales
   dateTimeFormatOptions?: Intl.DateTimeFormatOptions
   defaultProps?: Partial<ProximaDefaultProps>
+  ssr?: boolean
 }
 
 export type {

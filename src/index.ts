@@ -3,6 +3,14 @@ import type { ProximaDefaultProps, ProximaSetupOptions } from './types.d';
 import type { Plugin } from 'vue';
 
 
+// SSR
+
+let ssr = false;
+
+const setSSR = (flag: boolean) => (ssr = flag);
+export const isSSR = () => ssr;
+
+
 // Props options
 
 let defaultProps: Partial<ProximaDefaultProps> = {};
@@ -60,6 +68,9 @@ export default {
     }
     if (options?.defaultProps) {
       setDefaultProps(options.defaultProps);
+    }
+    if (options?.ssr) {
+      setSSR(true);
     }
   },
 } as Plugin<ProximaSetupOptions>;
