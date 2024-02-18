@@ -75,7 +75,7 @@ export default defineNuxtModule<ProximaNuxtOptions>({
     name: 'proxima-vue',
     configKey: 'proxima',
     compatibility: {
-      nuxt: '^3.10.0'
+      nuxt: '^3.0.0'
     },
   },
   defaults: {
