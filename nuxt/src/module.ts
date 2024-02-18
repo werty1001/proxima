@@ -97,7 +97,7 @@ export default defineNuxtModule<ProximaNuxtOptions>({
           import proxima from 'proxima-vue';
 
           export default defineNuxtPlugin(({ vueApp }) => {
-            vueApp.use(proxima, ${JSON.stringify(options)});
+            vueApp.use(proxima, ${JSON.stringify({ ...options, ssr: true })});
           });
         `;
       },
