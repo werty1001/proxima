@@ -55,7 +55,7 @@
           }"
           :data-stop-blur="item.shouldPreventBlur ? id : undefined"
           tabindex="-1"
-          role="button"
+          aria-hidden="true"
           v-html="item.html"
           @click="item.onClick"
         />
