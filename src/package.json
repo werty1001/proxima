@@ -23,7 +23,7 @@
     "vue": "^3.3.4",
     "vue-router": "^4.0.0"
   },
-  "homepage": "https://github.com/werty1001/proxima#readme",
+  "homepage": "https://proxima.wiki",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/werty1001/proxima.git"
