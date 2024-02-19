@@ -196,10 +196,6 @@ const updateByEvent = () => {
     const value = unref(isChecked) ? props.falseValue : props.trueValue;
     emit('update:modelValue', value);
   }
-  // Safari does not set focus
-  if (document.activeElement?.id !== getId()) {
-    focus();
-  }
 };
 
 const onBlur = (event: FocusEvent) => {

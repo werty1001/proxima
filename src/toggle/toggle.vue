@@ -221,11 +221,6 @@ const updateByEvent = (event: Event, option: ProximaToggleOption) => {
   } else {
     emit('update:modelValue', option.value);
   }
-  // Safari does not set focus
-  const target = event.target as HTMLInputElement;
-  if (document.activeElement?.id !== target?.id) {
-    target?.focus();
-  }
 };
 
 const isValid = computed(() => !props.required || Boolean(props.modelValue));

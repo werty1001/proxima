@@ -164,10 +164,6 @@ const updateByEvent = () => {
     const shouldSendTrue = props.type === 'radio' || unref(isIndeterminate);
     emit('update:modelValue', shouldSendTrue ? props.trueValue : value);
   }
-  // Safari does not set focus
-  if (document.activeElement?.id !== getId()) {
-    focus();
-  }
 };
 
 const onBlur = (event: FocusEvent) => {
