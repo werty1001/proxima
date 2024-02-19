@@ -324,13 +324,12 @@ const getOptionLabel = (option: any) => {
 };
 
 const getOptionTrack = (option: any) => {
-  if (option?.[props.trackKey]) {
-    return option[props.trackKey];
-  }
-  if (['string', 'number'].includes(typeof option)) {
-    return option;
-  }
-  return '';
+  if (typeof option === 'string') return option;
+
+  const value = props.trackKey.split('.')
+    .reduce((acc, key) => acc?.[key] || acc, option);
+
+  return typeof value === 'string' ? value : '';
 };
 
 
