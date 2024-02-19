@@ -15,16 +15,16 @@
       field__option_create: isCreateButton,
     }"
   >
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      aria-hidden="true"
+      :class="`field__option-${isCreateButton ? 'plus' : 'tick'}`"
+    >
+      <path :d="isCreateButton ? 'M1.5 8h13M8 1.5v13' : 'm3 8 3.25 3.5 7-7'" />
+    </svg>
     <slot v-bind="slotProps">
-      <svg
-        viewBox="0 0 16 16"
-        width="16"
-        height="16"
-        aria-hidden="true"
-        :class="`field__option-${isCreateButton ? 'plus' : 'tick'}`"
-      >
-        <path :d="isCreateButton ? 'M1.5 8h13M8 1.5v13' : 'm3 8 3.25 3.5 7-7'" />
-      </svg>
       <span v-text="label" data-ghost-text />
     </slot>
   </li>

@@ -60,7 +60,7 @@
 import { ref, unref, toRaw, computed, useSlots, type InputHTMLAttributes } from 'vue';
 import ProximaEffect from '@/effect/effect.vue';
 import useLocale from '@/composables/locale';
-import getRandomId from '@/utils/randomId';
+import useId from '@/composables/id';
 
 import type {
   ProximaSize,
@@ -94,7 +94,6 @@ export interface ProximaSwitchProps {
 }
 
 const props = withDefaults(defineProps<ProximaSwitchProps>(), {
-  id: () => getRandomId('switch'),
   trueValue: true,
   falseValue: (props: ProximaSwitchProps) => {
     if (typeof props.trueValue === 'string') return '';
@@ -119,6 +118,8 @@ const props = withDefaults(defineProps<ProximaSwitchProps>(), {
   effect: () => getDefaultProp('effect', 'none') as 'none',
   theme: () => getDefaultProp('theme', '') as '',
 });
+
+const id = useId(props.id, 'switch');
 
 const emit = defineEmits<{
   'update:modelValue': [modelValue: ProximaSwitchProps['modelValue']]
@@ -170,7 +171,7 @@ const modifiers = computed(() => ({
 
 const attributes = computed(() => ({
   ...props.inputAttrs,
-  id: props.id,
+  id: unref(id) || undefined,
   disabled: props.disabled,
   required: props.required,
   checked: unref(isChecked),
@@ -195,10 +196,6 @@ const updateByEvent = () => {
     const value = unref(isChecked) ? props.falseValue : props.trueValue;
     emit('update:modelValue', value);
   }
-  // Safari does not set focus
-  if (document.activeElement?.id !== props.id) {
-    focus();
-  }
 };
 
 const onBlur = (event: FocusEvent) => {
@@ -221,7 +218,7 @@ const getErrorMessage = () => unref(errorMessage);
 const getContainer = () => unref(container);
 const getElement = () => unref(el);
 const getValue = () => props.modelValue;
-const getId = () => props.id;
+const getId = () => unref(id);
 
 const checkValidity = () => unref(isValid);
 const checkFocus = () => unref(isFocused);
@@ -234,7 +231,7 @@ const blur = () => unref(el)?.blur?.();
 // Slot props
 
 const slotProps = computed(() => ({
-  id: props.id,
+  id: unref(id),
   hasEffect: unref(hasEffect),
   hasLabel: unref(hasLabel),
   hasUncheckedValue: unref(hasUncheckedValue),

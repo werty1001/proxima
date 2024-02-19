@@ -220,7 +220,7 @@ const errorCreator = (value: string) => {
 const fieldProps = computed(() => ({
   minlength: unref(format).length,
   maxlength: unref(format).length,
-  describedby: [unexpectedId, props.describedby].filter(Boolean).join(' '),
+  describedby: [unref(unexpectedId), props.describedby].filter(Boolean).join(' '),
   parseValue: mask.parseValue,
   validator,
   errorCreator,

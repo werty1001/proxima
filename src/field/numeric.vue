@@ -82,7 +82,7 @@ const mask = useMask({
 // Props
 
 const fieldProps = computed(() => ({
-  describedby: [unexpectedId, props.describedby].filter(Boolean).join(' '),
+  describedby: [unref(unexpectedId), props.describedby].filter(Boolean).join(' '),
   parseValue: mask.parseValue,
 }));
 

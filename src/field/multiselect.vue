@@ -78,7 +78,7 @@
         class="field__visually-hidden"
       />
       <div
-        :id="selectedId"
+        :id="selectedId || undefined"
         v-text="`${selectedLabel}: ${valueLabel}`"
         class="field__visually-hidden"
       />
@@ -118,7 +118,7 @@ import useFieldExpose from '@/field/useExpose';
 import useSelection from '@/field/useSelection';
 import useLocale from '@/composables/locale';
 import prepareToCompare from '@/utils/prepareToCompare';
-import getRandomId from '@/utils/randomId';
+import useId from '@/composables/id';
 
 import type { ProximaDynamicProps } from '../types.d';
 
@@ -140,12 +140,12 @@ export interface ProximaMultiselectProps<Option> {
   selectedLabel?: string
   pinFilter?: (option: Option) => boolean
   searchFilter?: (option: Option, query: string) => boolean
+  disableFilter?: (option: Option, modelValue: Option[]) => boolean
   selectChecker?: (option: Option, modelValue: Option[]) => boolean
-  disableChecker?: (option: Option, modelValue: Option[]) => boolean
   popupProps?: ProximaDynamicProps
   hasCreateButton?: boolean
-  hasChips?: boolean
   hasCountLabel?: boolean
+  hasChips?: boolean
   isListPending?: boolean
 }
 
@@ -301,8 +301,8 @@ const checkOptionSelected = (option: any) => {
 };
 
 const checkOptionDisabled = (option: any) => {
-  if (typeof props.disableChecker === 'function') {
-    return props.disableChecker(option, props.modelValue);
+  if (typeof props.disableFilter === 'function') {
+    return props.disableFilter(option, props.modelValue);
   }
   return Boolean(option?.disabled);
 };
@@ -315,23 +315,21 @@ const checkOptionPinned = (option: any) => {
 const checkCreateButton = (option: any) => Boolean(option?.[CREATE_BUTTON_KEY]);
 
 const getOptionLabel = (option: any) => {
-  if (option?.[props.filterKey]) {
-    return option[props.filterKey];
-  }
-  if (['string', 'number'].includes(typeof option)) {
-    return option;
-  }
-  return '';
+  if (typeof option === 'string') return option;
+
+  const value = props.filterKey.split('.')
+    .reduce((acc, key) => acc?.[key] || acc, option);
+
+  return typeof value === 'string' ? value : '';
 };
 
 const getOptionTrack = (option: any) => {
-  if (option?.[props.trackKey]) {
-    return option[props.trackKey];
-  }
-  if (['string', 'number'].includes(typeof option)) {
-    return option;
-  }
-  return '';
+  if (typeof option === 'string') return option;
+
+  const value = props.trackKey.split('.')
+    .reduce((acc, key) => acc?.[key] || acc, option);
+
+  return typeof value === 'string' ? value : '';
 };
 
 
@@ -553,11 +551,11 @@ const onFilterKeydown = (event: KeyboardEvent) => {
 
 // Props
 
-const selectedId = getRandomId('selected');
+const selectedId = useId();
 
 const fieldProps = computed(() => ({
   required: props.required,
-  describedby: [selectedId, props.describedby].filter(Boolean).join(' '),
+  describedby: [unref(selectedId), props.describedby].filter(Boolean).join(' '),
   modelValue: props.hasChips
     ? (unref(hasValue) ? unref(selectedLabel) : unref(filterValue))
     : unref(valueLabel) || unref(filterValue),
@@ -650,8 +648,8 @@ const getDefaultProp = getDefaultProps(componentName);
  * @prop isListPending `boolean` — Loading state for fetch mode (default `false`)
  * @prop searchFilter `function` — Search filter (default `null`)
  * @prop pinFilter `function` — Pin filter (default `null`)
+ * @prop disableFilter `function` — Check is option disabled (default `null`)
  * @prop selectChecker `function` — Check is option selected (default `null`)
- * @prop disableChecker `function` — Check is option disabled (default `null`)
  * @prop notfoundLabel `string` — Notfound message (default `''`, when prop is empty will be used locale value)
  * @prop countLabel `string` — Total count message (default `''`, when prop is empty will be used locale value)
  * @prop createLabel `string` — Create button label (default `''`, when prop is empty will be used locale value)

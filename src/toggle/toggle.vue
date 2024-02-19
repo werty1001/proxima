@@ -26,7 +26,7 @@
         <input
           :type="isMultiple ? 'checkbox' : 'radio'"
           :name="id"
-          :id="`${id}-item-${i}`"
+          :id="generateItemId(id, i)"
           :value="getSimpleValue(item)"
           :checked="checkStatus(item)"
           :disabled="item.disabled || disabled"
@@ -38,7 +38,7 @@
           @blur="onBlur"
         />
         <label
-          :for="`${id}-item-${i}`"
+          :for="generateItemId(id, i)"
           class="toggle__button"
           :class="{
             [`toggle__button_theme_${item.theme}`]: Boolean(item.theme),
@@ -91,7 +91,7 @@
 import { ref, unref, computed, useSlots, toRaw } from 'vue';
 import ProximaEffect from '@/effect/effect.vue';
 import useLocale from '@/composables/locale';
-import getRandomId from '@/utils/randomId';
+import useId from '@/composables/id';
 
 import type {
   ProximaSize,
@@ -133,7 +133,6 @@ export interface ProximaToggleProps {
 }
 
 const props = withDefaults(defineProps<ProximaToggleProps>(), {
-  id: () => getRandomId('toggle'),
   modelValue: '',
   options: () => [],
   label: '',
@@ -149,6 +148,9 @@ const props = withDefaults(defineProps<ProximaToggleProps>(), {
   effect: () => getDefaultProp('effect', 'none') as 'none',
   theme: () => getDefaultProp('theme', '') as '',
 });
+
+const id = useId(props.id, 'toggle');
+const generateItemId = (id: string, index: number) => id ? `${id}-item-${index}` : undefined;
 
 const emit = defineEmits<{
   'update:modelValue': [modelValue: ProximaToggleProps['modelValue']]
@@ -219,11 +221,6 @@ const updateByEvent = (event: Event, option: ProximaToggleOption) => {
   } else {
     emit('update:modelValue', option.value);
   }
-  // Safari does not set focus
-  const target = event.target as HTMLInputElement;
-  if (document.activeElement?.id !== target?.id) {
-    target?.focus();
-  }
 };
 
 const isValid = computed(() => !props.required || Boolean(props.modelValue));
@@ -257,7 +254,7 @@ const container = ref<HTMLFieldSetElement | null>(null);
 const getErrorMessage = () => unref(errorMessage);
 const getContainer = () => unref(container);
 const getValue = () => props.modelValue;
-const getId = () => props.id;
+const getId = () => unref(id);
 
 const checkValidity = () => unref(isValid);
 const checkFocus = () => unref(isFocused);
@@ -294,7 +291,7 @@ const blur = () => {
 // Slot props
 
 const slotProps = computed(() => ({
-  id: props.id,
+  id: unref(id),
   hasLabel: unref(hasLabel),
   hasHeader: unref(hasHeader),
   isValid: unref(isValid),

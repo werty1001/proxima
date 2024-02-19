@@ -29,7 +29,7 @@ import { ref, unref, computed, nextTick } from 'vue';
 
 import ProximaField from '@/field/field.vue';
 import useFieldExpose from '@/field/useExpose';
-import getRandomId from '@/utils/randomId';
+import useId from '@/composables/id';
 
 import type { ProximaFieldAction } from '../types.d';
 
@@ -58,16 +58,16 @@ const toggleType = () => {
 
 // Actions
 
-const id = getRandomId('eye');
+const id = useId();
 
 const fieldActions = computed(() => {
   if (!props.hasEyeButton) return props.actions;
-  const attr = unref(isHidden) ? '' : ` mask="url(#${id})"`;
+  const attr = unref(isHidden) ? '' : ` mask="url(#${unref(id)})"`;
   return [
     ...props.actions,
     {
       id: 'eye',
-      html: `<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><mask id="${id}"><rect x="0" y="0" width="100%" height="100%" fill="white" /><circle cx="6" cy="6.5" r="2" fill="black" /></mask><ellipse cx="8" cy="8" rx="7" ry="5" fill="none" stroke-width="1" stroke="currentColor" /><circle cx="8" cy="8" r="2.5" fill="none" stroke-width="1" stroke="currentColor" stroke-dasharray="4"${attr} /></svg>`,
+      html: `<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><mask id="${unref(id)}"><rect x="0" y="0" width="100%" height="100%" fill="white" /><circle cx="6" cy="6.5" r="2" fill="black" /></mask><ellipse cx="8" cy="8" rx="7" ry="5" fill="none" stroke-width="1" stroke="currentColor" /><circle cx="8" cy="8" r="2.5" fill="none" stroke-width="1" stroke="currentColor" stroke-dasharray="4"${attr} /></svg>`,
       shouldPreventBlur: true,
       pressed: !unref(isHidden),
       onClick: toggleType,
