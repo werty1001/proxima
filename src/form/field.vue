@@ -33,7 +33,7 @@
           v-if="error && errorView === 'popup' && isFocused"
           align-y="above"
           :align-x="isPopupAlignToStart ? 'start' : 'end'"
-          v-bind="popupProps"
+          v-bind="errorPopupProps"
           :bind-to="`#${focusId}`"
           class="form__popup"
         >
@@ -78,7 +78,7 @@ export interface ProximaFormFieldProps<Values> {
   errorView?: 'popup' | 'plain'
   errorCreator?: (value: any) => string
   customValidator?: (value: any) => boolean
-  popupProps?: ProximaDynamicProps
+  errorPopupProps?: ProximaDynamicProps
   describedby?: string
   required?: boolean
   disabled?: boolean
