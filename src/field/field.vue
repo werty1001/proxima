@@ -116,7 +116,7 @@ export interface ProximaFieldAction {
   html: string
   shouldPreventBlur?: boolean
   pressed?: boolean
-  onClick: Function
+  onClick: () => void
 }
 
 export interface ProximaFieldProps {

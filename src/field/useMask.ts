@@ -127,8 +127,10 @@ export default (options: {
 
   // Parse input
 
-  const parseInput = (event: InputEvent) => {
-    if (event.inputType === 'insertLineBreak') return;
+  const parseInput = (event: Event) => {
+    const { inputType = '', data = '' } = event as InputEvent;
+
+    if (inputType === 'insertLineBreak') return;
 
     event.preventDefault();
 
@@ -138,8 +140,8 @@ export default (options: {
       currentValue: target.value,
       selectionStart: target.selectionStart || 0,
       selectionEnd: target.selectionEnd || 0,
-      inputType: event.inputType,
-      inputData: event.data || '',
+      inputType,
+      inputData: data || '',
       validSymbols: unref(options.validSymbols),
       format: unref(options.format),
       maxlength: target.maxLength >= 1 ? target.maxLength : undefined,
