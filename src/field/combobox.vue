@@ -498,7 +498,7 @@ const fieldProps = computed(() => ({
 
 // Slot props
 
-const popupSlots = ['popup', 'popup-prepend', 'popup-footer'];
+const popupSlots = ['popup', 'popup-prepend', 'popup-footer', 'popup-footer-prepend', 'popup-footer-append'];
 
 const slotProps = computed(() => ({
   maxVisibleOptions: props.maxVisibleOptions,
