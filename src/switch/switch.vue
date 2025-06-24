@@ -57,10 +57,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, unref, toRaw, computed, useSlots, type InputHTMLAttributes } from 'vue';
+import { ref, unref, toRaw, computed, useSlots, useId, type InputHTMLAttributes } from 'vue';
 import ProximaEffect from '@/effect/effect.vue';
 import useLocale from '@/composables/locale';
-import useId from '@/composables/id';
 
 import type {
   ProximaSize,
@@ -119,7 +118,7 @@ const props = withDefaults(defineProps<ProximaSwitchProps>(), {
   theme: () => getDefaultProp('theme', '') as '',
 });
 
-const id = useId(props.id, 'switch');
+const id = props.id || useId();
 
 const emit = defineEmits<{
   'update:modelValue': [modelValue: ProximaSwitchProps['modelValue']]

@@ -88,9 +88,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, useSlots, unref, onMounted, watch, nextTick } from 'vue';
+import { ref, computed, useSlots, unref, onMounted, watch, nextTick, useId } from 'vue';
 import useLocale from '@/composables/locale';
-import useId from '@/composables/id';
 
 import type {
   InputHTMLAttributes,
@@ -185,7 +184,7 @@ const props = withDefaults(defineProps<ProximaFieldProps>(), {
   theme: () => getDefaultProp('theme', '') as '',
 });
 
-const id = useId(props.id, 'field');
+const id = props.id || useId();
 
 const emit = defineEmits<{
   'click:arrow': []

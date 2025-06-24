@@ -78,8 +78,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, unref, useSlots } from 'vue';
-import useId from '@/composables/id';
+import { computed, unref, useSlots, useId } from 'vue';
 
 import type { ProximaSize } from '../types.d';
 
@@ -100,7 +99,7 @@ const props = withDefaults(defineProps<ProximaSpinnerProps>(), {
   theme: () => getDefaultProp('theme', '') as '',
 });
 
-const id = useId(props.id, 'spinner');
+const id = props.id || useId();
 
 const slots = useSlots();
 const hasLabel = computed(() => Boolean(props.label || slots.label));

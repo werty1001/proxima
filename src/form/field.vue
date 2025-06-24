@@ -45,14 +45,13 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import { ref, unref, computed, useAttrs, inject, onMounted, onBeforeUnmount } from 'vue';
+import { ref, unref, computed, useAttrs, inject, onMounted, onBeforeUnmount, useId } from 'vue';
 
 import { formProvideKey } from '@/form/form.vue';
 
 import ProximaField from '@/field/field.vue';
 import ProximaPopup from '@/popup/popup.vue';
 import useLocale from '@/composables/locale';
-import useId from '@/composables/id';
 
 import type {
   ProximaDynamicProps,
@@ -93,7 +92,7 @@ const props = withDefaults(defineProps<ProximaFormFieldProps<T>>(), {
   required: true,
 });
 
-const id = useId(props.id, 'form-field');
+const id = props.id || useId();
 const errorId = computed(() => unref(id) ? `${unref(id)}-error` : '');
 
 const attrs = useAttrs();

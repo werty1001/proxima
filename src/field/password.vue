@@ -25,11 +25,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, unref, computed, nextTick } from 'vue';
+import { ref, unref, computed, nextTick, useId } from 'vue';
 
 import ProximaField from '@/field/field.vue';
 import useFieldExpose from '@/field/useExpose';
-import useId from '@/composables/id';
 
 import type { ProximaFieldAction } from '../types.d';
 

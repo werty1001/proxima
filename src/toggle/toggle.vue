@@ -88,10 +88,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, unref, computed, useSlots, toRaw } from 'vue';
+import { ref, unref, computed, useSlots, toRaw, useId } from 'vue';
 import ProximaEffect from '@/effect/effect.vue';
 import useLocale from '@/composables/locale';
-import useId from '@/composables/id';
 
 import type {
   ProximaSize,
@@ -149,7 +148,7 @@ const props = withDefaults(defineProps<ProximaToggleProps>(), {
   theme: () => getDefaultProp('theme', '') as '',
 });
 
-const id = useId(props.id, 'toggle');
+const id = props.id || useId();
 const generateItemId = (id: string, index: number) => id ? `${id}-item-${index}` : undefined;
 
 const emit = defineEmits<{

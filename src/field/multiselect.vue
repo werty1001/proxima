@@ -108,7 +108,7 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import { ref, unref, computed, watch, nextTick } from 'vue';
+import { ref, unref, computed, watch, nextTick, useId } from 'vue';
 
 import ProximaField from '@/field/field.vue';
 import ProximaFieldPopup from '@/field/popup.vue';
@@ -118,7 +118,6 @@ import useFieldExpose from '@/field/useExpose';
 import useSelection from '@/field/useSelection';
 import useLocale from '@/composables/locale';
 import prepareToCompare from '@/utils/prepareToCompare';
-import useId from '@/composables/id';
 
 import type { ProximaDynamicProps } from '../types.d';
 
