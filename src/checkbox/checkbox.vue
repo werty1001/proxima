@@ -40,10 +40,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, unref, toRaw, computed, useSlots, onMounted, watch, type InputHTMLAttributes } from 'vue';
+import { ref, unref, toRaw, computed, useSlots, onMounted, watch, useId, type InputHTMLAttributes } from 'vue';
 import ProximaEffect from '@/effect/effect.vue';
 import useLocale from '@/composables/locale';
-import useId from '@/composables/id';
 
 import type { ProximaSize, ProximaShadow, ProximaClickEffect } from '../types.d';
 
@@ -90,7 +89,7 @@ const props = withDefaults(defineProps<ProximaCheckboxProps>(), {
   theme: () => getDefaultProp('theme', '') as '',
 });
 
-const id = useId(props.id, 'checkbox');
+const id = props.id || useId();
 
 const emit = defineEmits<{
   'update:modelValue': [modelValue: ProximaCheckboxProps['modelValue']]

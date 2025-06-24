@@ -24,6 +24,7 @@
 
     <template #footer>
       <slot name="popup-footer" :id="describedId">
+        <slot name="popup-footer-prepend" :id="describedId"></slot>
         <p
           v-if="filterResults"
           v-text="filterResults"
@@ -31,6 +32,7 @@
           :key="`${id}-${filterValue}`"
           class="text text_dim"
         />
+        <slot name="popup-footer-append" :id="describedId"></slot>
       </slot>
     </template>
 

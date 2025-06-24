@@ -61,10 +61,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, unref, toRaw, computed, useSlots } from 'vue';
+import { ref, unref, toRaw, computed, useSlots, useId } from 'vue';
 import ProximaCheckbox from '@/checkbox/checkbox.vue';
 import useLocale from '@/composables/locale';
-import useId from '@/composables/id';
 
 import type {
   ProximaSize,
@@ -116,7 +115,7 @@ const props = withDefaults(defineProps<ProximaRadioGroupProps>(), {
   theme: () => getDefaultProp('theme', '') as '',
 });
 
-const id = useId(props.id, 'radiogroup');
+const id = props.id || useId();
 
 const emit = defineEmits<{
   'update:modelValue': [modelValue: ProximaRadioGroupProps['modelValue']]

@@ -1,6 +1,5 @@
-import { ref, unref } from 'vue';
+import { ref, unref, useId } from 'vue';
 import useTimeout from '@/composables/timeout';
-import useId from '@/composables/id';
 
 export default () => {
   const unexpectedId = useId();
