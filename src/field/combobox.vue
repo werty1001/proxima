@@ -320,7 +320,7 @@ watch(filterValue, (value) => {
 
 watch(() => props.modelValue, (option) => {
   const label = getOptionLabel(option);
-  if (!unref(isPopupOpened) && label !== unref(filterValue)) {
+  if (label && label !== unref(filterValue)) {
     setFilterValue(label);
   }
 });
